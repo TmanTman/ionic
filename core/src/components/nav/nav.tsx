@@ -1,13 +1,12 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
-import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavOutlet, QueueController } from '../..';
+import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavOutlet, QueueController, RouteID, RouteWrite, RouterDirection } from '../../interface';
 import { assert } from '../../utils/helpers';
 import { AnimationOptions, ViewLifecycle, lifecycle, transition } from '../../utils/transition';
-import { RouteID, RouteWrite, RouterDirection } from '../router/utils/interfaces';
+import { NavComponent, NavDirection, NavOptions, NavResult, TransitionDoneFn, TransitionInstruction, ViewState } from '../../interface';
+import { ViewController, convertToViews, matches } from './view-controller';
+
 import iosTransitionAnimation from './animations/ios.transition';
 import mdTransitionAnimation from './animations/md.transition';
-import { NavComponent, NavDirection, NavOptions, NavResult, TransitionDoneFn, TransitionInstruction, ViewState, convertToViews } from './nav-util';
-import { ViewController, matches } from './view-controller';
-
 
 
 @Component({
@@ -17,7 +16,7 @@ export class Nav implements NavOutlet {
 
   private init = false;
   private transInstr: TransitionInstruction[] = [];
-  private sbTrns: Animation|undefined;
+  private sbTrns?: Animation;
   private useRouter = false;
   private isTransitioning = false;
   private destroyed = false;
@@ -34,9 +33,9 @@ export class Nav implements NavOutlet {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ mutable: true }) swipeBackEnabled?: boolean;
   @Prop({ mutable: true }) animated?: boolean;
-  @Prop() delegate?: FrameworkDelegate|undefined;
-  @Prop() rootParams: ComponentProps|undefined;
-  @Prop() root: NavComponent|undefined;
+  @Prop() delegate?: FrameworkDelegate;
+  @Prop() rootParams?: ComponentProps;
+  @Prop() root?: NavComponent;
   @Watch('root')
   rootChanged() {
     const isDev = Build.isDev;

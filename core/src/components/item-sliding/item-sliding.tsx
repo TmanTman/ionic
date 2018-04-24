@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, State } from '@stencil/core';
-import { GestureDetail } from '../../index';
+import { GestureDetail } from '../../interface';
 
 
 const SWIPE_MARGIN = 30;
@@ -43,7 +43,7 @@ export class ItemSliding {
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonItemSlidingElement;
 
   @State() state: SlidingState = SlidingState.Disabled;
 
@@ -132,7 +132,7 @@ export class ItemSliding {
 
   private canStart(): boolean {
     const selected = this.list && this.list.getOpenItem();
-    if (selected && selected !== this) {
+    if (selected && selected !== this.el) {
       this.closeOpened();
       return false;
     }
@@ -140,7 +140,7 @@ export class ItemSliding {
   }
 
   private onDragStart() {
-    this.list && this.list.setOpenItem(this);
+    this.list && this.list.setOpenItem(this.el);
 
     if (this.tmr) {
       clearTimeout(this.tmr);

@@ -1,10 +1,10 @@
-import { Nav } from '../nav';
-import { ViewController } from '../view-controller';
-import { AnimationControllerImpl } from '../../animation-controller/animation-controller';
-
-import { NavDirection, NavOptions, ViewState } from '../nav-util';
 import { TestWindow } from '@stencil/core/dist/testing';
+import { AnimationControllerImpl } from '../../animation-controller/animation-controller';
+import { Nav } from '../nav';
+import { NavDirection, NavOptions, ViewState } from '../nav-interface';
+import { ViewController } from '../view-controller';
 import { Config } from '../../../global/config';
+
 
 
 describe('NavController', () => {

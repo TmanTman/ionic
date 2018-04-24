@@ -1,27 +1,7 @@
 import { ViewController } from './view-controller';
-import { Animation, ComponentRef, FrameworkDelegate } from '../..';
+import { Animation, ComponentRef, FrameworkDelegate } from '../../interface';
 
-export function convertToView(page: any, params: any): ViewController|null {
-  if (!page) {
-    return null;
-  }
-  if (page instanceof ViewController) {
-    return page;
-  }
-  return new ViewController(page, params);
-}
-
-export function convertToViews(pages: any[]): ViewController[] {
-  return pages.map(page => {
-    if (page instanceof ViewController) {
-      return page;
-    }
-    if ('page' in page) {
-      return convertToView(page.page, page.params);
-    }
-    return convertToView(page, undefined);
-  }).filter(v => v !== null) as ViewController[];
-}
+export { Nav } from './nav';
 
 export const enum ViewState {
   New = 1,

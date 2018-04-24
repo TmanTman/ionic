@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State } from '@stencil/core';
-import { GestureDetail, QueueController } from '../../index';
+import { GestureDetail, QueueController } from '../../interface';
 
 export const enum RefresherState {
   Inactive = 1 << 0,
